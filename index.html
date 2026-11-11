@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Waste - EcoFeast</title>
+  <style>
+/* ==========================================================
+   EcoFeast - Article page (professional style)
+   ========================================================== */
+
+:root {
+  --crimson: #a51c30;
+  --crimson-dark: #7a1323;
+  --green: #1f8f5f;
+  --green-dark: #145c3d;
+  --text: #1f2933;
+  --muted: #5f6b76;
+  --line: #e1e5e9;
+  --bg-soft: #f5f7f6;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--crimson);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+a:hover { color: var(--crimson-dark); }
+
+:focus-visible {
+  outline: 3px solid #f2b705;
+  outline-offset: 2px;
+}
+
+::selection { background: #fbd5da; }
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 10px; top: 10px; background: #fff; padding: 8px 12px; z-index: 100; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  background: var(--crimson);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+.topbar .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+.topbar-name { font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; font-size: 12px; }
+.topbar-links { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
+.topbar-links li { margin: 0; }
+.topbar-links a { color: #fff; text-decoration: none; opacity: 0.92; }
+.topbar-links a:hover { opacity: 1; text-decoration: underline; }
+.topbar-links .gift {
+  background: #fff;
+  color: var(--crimson);
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  opacity: 1;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.topbar-links .gift:hover { text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow); }
+
+/* ---------- Site header ---------- */
+.site-header { background: #fff; border-bottom: 1px solid var(--line); }
+.site-header .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.logo {
+  font-family: var(--sans);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo:hover { color: var(--text); }
+.logo-mark {
+  background: linear-gradient(135deg, #2bb37a, var(--green-dark));
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 3px 8px rgba(31, 143, 95, 0.35);
+}
+
+.search { display: flex; box-shadow: var(--shadow); border-radius: 6px; overflow: hidden; }
+.search input {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-right: none;
+  font-size: 15px;
+  font-family: var(--sans);
+  min-width: 220px;
+  border-radius: 6px 0 0 6px;
+}
+.search input:focus { outline: none; border-color: var(--crimson); }
+.search button,
+.cta button {
+  padding: 10px 18px;
+  background: var(--crimson);
+  color: #fff;
+  border: 1px solid var(--crimson);
+  cursor: pointer;
+  font-size: 15px;
+  font-family: var(--sans);
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.search button:hover,
+.cta button:hover { background: var(--crimson-dark); }
+
+/* ---------- Main menu (sticky) ---------- */
+.menu {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-family: var(--sans);
+  font-size: 15px;
+}
+.menu ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
+.menu li { margin: 0; }
+.menu a {
+  display: block;
+  padding: 14px 16px;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.menu a:hover { background: var(--bg-soft); color: var(--crimson); border-bottom-color: var(--line); }
+.menu a.current { color: var(--crimson); font-weight: 600; border-bottom-color: var(--crimson); }
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--muted);
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+.breadcrumb a { text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ---------- Layout ---------- */
+.layout { display: flex; gap: 48px; align-items: flex-start; }
+.article { flex: 1; min-width: 0; padding-bottom: 56px; }
+.sidebar { width: 310px; flex-shrink: 0; padding-top: 28px; position: sticky; top: 70px; }
+
+/* ---------- Headings ---------- */
+h1 {
+  font-size: 52px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin: 16px 0 24px;
+  color: #111;
+}
+h1::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 5px;
+  background: var(--crimson);
+  border-radius: 3px;
+  margin-top: 16px;
+}
+.big-picture {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 32px;
+  color: var(--crimson);
+  margin: 36px 0 12px;
+}
+h3 {
+  font-size: 26px;
+  line-height: 1.25;
+  margin: 44px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--line);
+  color: #111;
+}
+h4 {
+  font-family: var(--sans);
+  font-size: 19px;
+  margin: 28px 0 6px;
+  color: var(--green-dark);
+}
+
+p { margin: 0 0 18px; }
+.big-picture + p::first-letter {
+  font-size: 3.4em;
+  float: left;
+  line-height: 0.85;
+  padding: 6px 10px 0 0;
+  font-weight: bold;
+  color: var(--crimson);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, #2bb37a 0%, var(--green) 45%, var(--green-dark) 100%);
+  box-shadow: var(--shadow-lg);
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px 28px;
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 600;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent 60%);
+}
+.hero span { position: relative; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); }
+
+/* ---------- Lists ---------- */
+ul, ol { padding-left: 26px; margin: 0 0 20px; }
+li { margin-bottom: 8px; }
+.article ul li::marker { color: var(--crimson); }
+.article ol li::marker { color: var(--crimson); font-weight: bold; }
+
+/* ---------- Table ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--sans);
+  font-size: 15px;
+  margin: 16px 0 26px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  padding: 0 0 8px;
+  color: var(--muted);
+}
+th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+th {
+  background: var(--green-dark);
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+}
+tbody tr:nth-child(even) { background: var(--bg-soft); }
+tbody tr { transition: background 0.2s; }
+tbody tr:hover { background: #e8f4ee; }
+tbody tr:last-child td { border-bottom: none; }
+
+.fresh, .soon, .expired {
+  font-weight: 600;
+}
+td.fresh, td.soon, td.expired { white-space: nowrap; }
+td.fresh::before, td.soon::before, td.expired::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background: currentColor;
+}
+.fresh   { color: var(--green); }
+.soon    { color: #c26a00; }
+.expired { color: #c0392b; }
+
+/* ---------- Read next ---------- */
+.read-next {
+  background: linear-gradient(90deg, #fdf1f3, #fff);
+  border: 1px solid #f3d3d8;
+  border-left: 6px solid var(--crimson);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-top: 36px;
+  font-family: var(--sans);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.read-next:hover { transform: translateX(4px); box-shadow: var(--shadow); }
+.read-next a { text-decoration: none; display: block; }
+
+.refs { font-family: var(--sans); font-size: 14px; color: var(--muted); }
+
+/* ---------- Sidebar ---------- */
+.box {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--green);
+  border-radius: 10px;
+  padding: 4px 22px 16px;
+  font-family: var(--sans);
+  font-size: 15px;
+  box-shadow: var(--shadow);
+}
+.box h3 { font-size: 19px; margin: 18px 0 10px; border-bottom: none; padding-bottom: 0; }
+.plate { list-style: none; padding: 0; margin: 0; }
+.plate li { padding: 11px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.plate li:last-child { border-bottom: none; }
+.plate strong {
+  display: block;
+  color: var(--green);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+/* ---------- Call to action ---------- */
+.cta {
+  background: linear-gradient(135deg, var(--green-dark), #0e3f2a);
+  color: #fff;
+  padding: 48px 0;
+  font-family: var(--sans);
+  font-size: 16px;
+}
+.cta-grid { display: flex; gap: 48px; flex-wrap: wrap; }
+.cta-grid > div { flex: 1 1 300px; }
+.cta h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  color: #fff;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.cta p { color: #d4e8dd; }
+.cta form { display: flex; flex-wrap: wrap; gap: 8px; }
+.cta input {
+  padding: 11px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: var(--sans);
+  width: 240px;
+  max-width: 100%;
+}
+.cta button { border-radius: 6px; }
+.button {
+  display: inline-block;
+  background: #fff;
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 11px 24px;
+  border-radius: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.button:hover { color: var(--green-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: #14181c;
+  color: #b8c0c8;
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 32px 0;
+}
+.site-footer ul { list-style: none; margin: 0 0 14px; padding: 0; display: flex; gap: 22px; flex-wrap: wrap; }
+.site-footer li { margin: 0; }
+.site-footer a { color: #fff; text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+.site-footer p { margin: 0 0 6px; }
+.small { font-size: 12px; color: #7d8791; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .layout { flex-direction: column; gap: 0; }
+  .sidebar { width: 100%; position: static; padding-top: 0; margin-bottom: 40px; }
+  h1 { font-size: 38px; }
+  .big-picture { font-size: 26px; }
+  .topbar-links { display: none; }
+  .hero { height: 220px; }
+  .menu ul { overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; }
+  .search { width: 100%; }
+  .search input { flex: 1; min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+@media print {
+  .topbar, .menu, .sidebar, .cta, .search { display: none; }
+  body { font-size: 12pt; }
+}
+  </style>
+</head>
+<body>
+
+  <a class="skip" href="#content">Skip to content</a>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="wrap">
+      <span class="topbar-name">EcoFeast Project</span>
+      <ul class="topbar-links">
+        <li><a href="#inventory">Food Tracker</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a class="gift" href="#donate">Donate Food</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Site header -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="index.html"><span class="logo-mark">E</span>EcoFeast</a>
+      <form class="search" action="#">
+        <input type="search" placeholder="Search EcoFeast" aria-label="Search">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Main menu -->
+  <nav class="menu">
+    <div class="wrap">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#inventory">Food Tracker</a></li>
+        <li><a href="#community">Community Sharing</a></li>
+        <li><a href="#recipes">Recipes</a></li>
+        <li><a class="current" href="#top">Sustainability</a></li>
+        <li><a href="#analytics">Analytics</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="wrap breadcrumb">
+    <a href="#">EcoFeast</a> &gt; <a href="#">Sustainability</a> &gt; Food Waste
+  </div>
+
+  <div class="wrap layout">
+
+    <!-- Article -->
+    <main id="content" class="article">
+
+      <h1 id="top">Food Waste</h1>
+
+      <div class="hero" role="img" aria-label="Illustration of food scraps going into a compost bin">
+        <span>Fresh food, saved from the bin</span>
+      </div>
+
+      <h2 class="big-picture">The Big Picture</h2>
+
+      <p>
+        Food is lost or thrown away at every step between the farm and the dinner table.
+        Some of it spoils in storage or during transport, some is trimmed away during
+        preparation, and a surprising amount is simply forgotten in the fridge until it
+        is no longer good to eat.
+      </p>
+
+      <p>It helps to separate two ideas:</p>
+      <ul>
+        <li><strong>Food loss</strong> happens early, during growing, storage, processing and delivery.</li>
+        <li><strong>Food waste</strong> happens late, when food that was still fit to eat is thrown away by shops, kitchens and households.</li>
+      </ul>
+
+      <p>
+        When food rots in a landfill it gives off methane, a greenhouse gas. Every meal we
+        save also saves the water, energy and money that went into making it.
+      </p>
+
+      <h3>Benefits of Less Food Waste</h3>
+      <ul>
+        <li>Lower grocery bills, because you buy and cook only what you will eat.</li>
+        <li>Less rubbish to dispose of, and fewer emissions from landfills.</li>
+        <li>Better use of the energy, water and land used to grow and transport food.</li>
+        <li>Safe, untouched food reaches neighbours and food banks instead of the bin.</li>
+      </ul>
+
+      <h3>How EcoFeast Helps</h3>
+      <p>The EcoFeast mini project puts these ideas into four simple tools.</p>
+
+      <h4 id="inventory">1. Food Tracker</h4>
+      <p>List what is in your fridge, freezer and pantry with an expiry date, and see at a glance what needs to be eaten first.</p>
+      <table>
+        <caption>Sample inventory</caption>
+        <thead>
+          <tr><th>Item</th><th>Location</th><th>Expiry date</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Spinach</td><td>Fridge</td><td>12 Nov 2026</td><td class="soon">Expiring soon</td></tr>
+          <tr><td>Milk</td><td>Fridge</td><td>13 Nov 2026</td><td class="soon">Expiring soon</td></tr>
+          <tr><td>Bread</td><td>Pantry</td><td>09 Nov 2026</td><td class="expired">Expired</td></tr>
+          <tr><td>Rice</td><td>Pantry</td><td>01 Mar 2027</td><td class="fresh">Fresh</td></tr>
+        </tbody>
+      </table>
+
+      <h4 id="community">2. Community Sharing</h4>
+      <p>Cooked too much? Post the extra portions so a neighbour can collect them. Food banks and community fridges accept larger donations.</p>
+
+      <h4 id="recipes">3. Zero-Waste Recipes</h4>
+      <p>Get meal ideas built around the ingredients that are close to their date, such as a spinach and rice bowl or a bread pudding.</p>
+
+      <h4 id="analytics">4. Waste Analytics</h4>
+      <p>Track what you eat and what you throw away, and see which food groups you waste the most.</p>
+
+      <h3>The Food Recovery Hierarchy</h3>
+      <p>
+        The U.S. Environmental Protection Agency ranks the ways to deal with surplus food, from the
+        best option at the top to the last resort at the bottom:
+      </p>
+      <ol>
+        <li><em>Source reduction:</em> prepare and buy less in the first place.</li>
+        <li><em>Feed hungry people:</em> donate extra food to community sites.</li>
+        <li><em>Feed animals:</em> give scraps to farmers for animal feed.</li>
+        <li><em>Industrial uses:</em> turn used oils and fats into fuel.</li>
+        <li><em>Composting:</em> return food scraps to the soil.</li>
+        <li><em>Landfill or incineration:</em> the last resort.</li>
+      </ol>
+
+      <h3 id="donate">What You Can Do at Home</h3>
+      <ul>
+        <li>Plan meals before you shop and keep a list.</li>
+        <li>Store an "Eat Me First" box at eye level in the fridge.</li>
+        <li>Freeze leftovers before they spoil.</li>
+        <li>Learn the difference between "best before" and "use by" dates.</li>
+        <li>Share or donate what you cannot finish.</li>
+      </ul>
+
+      <p class="read-next"><a href="#inventory"><strong>Read Next: <em>Start Tracking Your Food &raquo;</em></strong></a></p>
+
+      <h3>Related</h3>
+      <ul>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#community">Community food banks</a></li>
+      </ul>
+
+      <h3>Source</h3>
+      <ol class="refs">
+        <li>United States Environmental Protection Agency. Food Recovery Hierarchy. epa.gov/sustainable-management-food/food-recovery-hierarchy</li>
+        <li>Page layout inspired by Harvard T.H. Chan School of Public Health, The Nutrition Source: Food Waste.</li>
+      </ol>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="box">
+        <h3>Eating Plate for the Planet</h3>
+        <ul class="plate">
+          <li><strong>Plan</strong> Make a meal plan and shop with a list.</li>
+          <li><strong>Store</strong> Keep food at the right temperature.</li>
+          <li><strong>Eat first</strong> Use the oldest food before the newest.</li>
+          <li><strong>Freeze</strong> Save leftovers for another day.</li>
+          <li><strong>Share</strong> Give surplus to people nearby.</li>
+          <li><strong>Compost</strong> Return the scraps to the soil.</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Calls to action -->
+  <section class="cta" id="about">
+    <div class="wrap cta-grid">
+      <div>
+        <h3>Support EcoFeast</h3>
+        <p>Help us keep good food out of the bin. Share a meal today.</p>
+        <a class="button" href="#donate">Donate food</a>
+      </div>
+      <div id="contact">
+        <h3>Get Our Newsletter</h3>
+        <p>A monthly update with food-saving tips and community news.</p>
+        <form action="#">
+          <input type="email" placeholder="Your email" aria-label="Email address">
+          <button type="submit">Sign up</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <ul>
+        <li><a href="#">EcoFeast Home</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+      <p>Copyright &copy; 2026 EcoFeast mini project.</p>
+      <p class="small">This website is for educational purposes only.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
